@@ -1,18 +1,21 @@
 /* App.css */
+
+/* 웹 폰트 가져오기. */
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
 
+/* 기본 스타일 */
 body {
   font-family: 'Nanum Gothic', sans-serif;
   margin: 0;
 }
 
-/* 전체 앱의 배경색 설정 (아주 연한 회색) */
+/* 전체 앱 배경색 및 최소 높이 설정. */
 .App {
   background-color: #f8f9fa;
   min-height: 100vh;
 }
 
-/* 헤더 영역 스타일 (네이버 느낌의 흰색) */
+/* 헤더 영역 스타일. */
 .header {
   display: flex;
   justify-content: space-between;
@@ -23,47 +26,87 @@ body {
   border-bottom: 1px solid #e9ecef;
 }
 
-/* 헤더 제목 컨테이너 스타일 */
-.header-title-container {
-  display: flex; /* Flexbox를 사용해 아이콘과 제목을 가로로 정렬 */
-  align-items: center; /* 세로 가운데 정렬 */
-  gap: 10px; /* 아이콘과 제목 사이의 간격 */
+/* 헤더 왼쪽 부분 컨테이너. */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
-/* 헤더 제목 스타일 (네이버 로고색과 유사한 진한 파란색) */
+/* 헤더 제목 컨테이너 스타일. */
+.header-title-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 헤더 제목 스타일. */
 .header-title {
   font-size: 2rem;
   font-weight: 800;
-  color: #00a400; /* 네이버 녹색과 유사하게 변경 */
+  color: #00a400;
   margin: 0;
 }
 
-/* 아이콘 스타일 */
+/* 아이콘 스타일. */
 .title-icon {
-  font-size: 2rem; /* 아이콘 크기 조절 */
-  color: #00a400; /* 아이콘 색상 설정 */
+  font-size: 2rem;
+  color: #00a400;
 }
 
-/* 네비게이션 스타일 */
+/* 네비게이션 메뉴 스타일. */
 .nav {
-  display: flex; /* Flexbox로 메뉴 항목을 가로로 정렬 */
+  display: flex;
   gap: 1rem;
 }
 
+/* 네비게이션 링크 스타일. */
 .nav-link {
-  text-decoration: none; /* 밑줄 제거 */
-  color: #000000; /* 글자색 검정 */
+  text-decoration: none;
+  color: #000000;
   font-weight: bold;
   padding: 0.5rem 1rem;
   transition: color 0.2s;
 }
 
+/* 호버 시 색상 변경. */
 .nav-link:hover {
-  color: #00a400; /* 호버 시 색상 변경 */
+  color: #00a400;
 }
 
+/* 로그인/회원가입 버튼 컨테이너 스타일. */
+.auth-buttons {
+  display: flex;
+  gap: 1rem;
+}
 
-/* 메인 콘텐츠 영역 스타일 (흰색 배경) */
+/* 로그인/회원가입 버튼 스타일. */
+.auth-button {
+  background-color: #00a400;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.auth-button.login {
+  background-color: #34495e;
+}
+
+.auth-button.signup {
+  background-color: #00a400;
+}
+
+.auth-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 메인 콘텐츠 영역 스타일. */
 .outer {
   max-width: 1000px;
   margin: 2rem auto;
@@ -74,17 +117,69 @@ body {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
-/* 게시판 제목 스타일 (진한 회색) */
-.outer h2 {
+/* 게시판 제목과 검색창을 정렬하는 Flexbox 설정 */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.list-header h2 {
   text-align: left;
   font-size: 1.8rem;
   color: #333;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
   border-left: 4px solid #00a400;
   padding-left: 10px;
 }
 
-/* 테이블 스타일 */
+.search-container {
+  display: flex;
+  gap: 10px;
+}
+
+.search-category {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-category:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.search-input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input::placeholder {
+  color: #aaa;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.no-results {
+  text-align: center;
+  padding: 2rem;
+  color: #999;
+}
+
+/* 테이블 스타일. */
 .list-table {
   width: 100%;
   border-collapse: collapse;
@@ -98,27 +193,27 @@ body {
   border-bottom: 1px solid #e9ecef;
 }
 
-/* 테이블 헤더 스타일 (아주 연한 회색) */
+/* 테이블 헤더 스타일. */
 .list-table thead th {
   background-color: #f8f9fa;
   color: #495057;
   font-weight: bold;
 }
 
-/* 테이블 바디 행 스타일 */
+/* 테이블 행 호버 효과. */
 .list-table tbody tr:hover {
   background-color: #e9ecef;
   cursor: pointer;
 }
 
-/* 테이블 셀 너비 설정 */
+/* 테이블 셀 너비 설정. */
 .list-table th:nth-child(1), .list-table td:nth-child(1) { width: 10%; }
 .list-table th:nth-child(2), .list-table td:nth-child(2) { width: 40%; text-align: left; color: #000; }
 .list-table th:nth-child(3), .list-table td:nth-child(3) { width: 20%; }
 .list-table th:nth-child(4), .list-table td:nth-child(4) { width: 20%; }
 .list-table th:nth-child(5), .list-table td:nth-child(5) { width: 10%; }
 
-/* 삭제 버튼 스타일 */
+/* 삭제 버튼 스타일. */
 .list-table button {
   background-color: #6c757d;
   color: white;
@@ -133,7 +228,7 @@ body {
   background-color: #5a6268;
 }
 
-/* PostView 컴포넌트 CSS */
+/* PostView 컴포넌트 내용 스타일. */
 .post-content {
   padding: 2rem 0;
   border-bottom: 1px solid #e9ecef;
@@ -141,6 +236,7 @@ body {
   font-size: 1.1rem;
 }
 
+/* 반응 버튼 섹션 스타일. */
 .post-reactions {
   display: flex;
   justify-content: center;
@@ -148,6 +244,7 @@ body {
   gap: 1.5rem;
 }
 
+/* 개별 반응 버튼 스타일. */
 .reaction-button {
   display: flex;
   align-items: center;
@@ -168,6 +265,7 @@ body {
   font-size: 1.2rem;
 }
 
+/* 호버 시 버튼 효과. */
 .reaction-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -176,6 +274,7 @@ body {
 .like .reaction-icon { color: #007bff; }
 .heart .reaction-icon { color: #dc3545; }
 
+/* 게시글 액션 버튼 섹션 스타일. */
 .post-actions {
   display: flex;
   justify-content: flex-end;
@@ -185,12 +284,39 @@ body {
   padding-top: 1.5rem;
 }
 
+/* 수정/삭제/목록 버튼 스타일. */
+.post-actions .btn-list,
+.post-actions .btn-edit,
+.post-actions .btn-delete {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.post-actions .btn-edit {
+  background-color: #007bff;
+}
+
+.post-actions .btn-delete {
+  background-color: #dc3545;
+}
+
+.post-actions button:hover {
+  filter: brightness(1.2);
+}
+
+/* 댓글 섹션 스타일. */
 .comments-section {
   margin-top: 2rem;
   border-top: 1px solid #e9ecef;
   padding-top: 1.5rem;
 }
 
+/* 댓글 입력 영역 스타일. */
 .comment-input-area {
   display: flex;
   gap: 10px;
@@ -219,6 +345,7 @@ body {
   background-color: #0056b3;
 }
 
+/* 개별 댓글 스타일. */
 .comment-item {
   border-bottom: 1px solid #eee;
   padding: 10px 0;
@@ -236,13 +363,14 @@ body {
   margin-bottom: 5px;
 }
 
+/* 댓글이 없을 때 메시지 스타일. */
 .no-comments {
   text-align: center;
   color: #999;
   font-style: italic;
 }
 
-/* 페이지네이션 스타일 */
+/* 페이지네이션 섹션 스타일. */
 .pagination {
   display: flex;
   justify-content: center;
@@ -265,12 +393,14 @@ body {
   background-color: #f0f0f0;
 }
 
+/* 현재 페이지 버튼 스타일. */
 .pagination button.active {
   background-color: #007bff;
   color: white;
   border-color: #007bff;
 }
 
+/* 비활성화된 버튼 스타일. */
 .pagination button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
