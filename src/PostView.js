@@ -1,42 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import posts from './posts';
 import './App.css';
-// 반응 버튼 아이콘 가져오기.
-import { FaThumbsUp, FaRegComment, FaHeart } from "react-icons/fa";
+import { FaThumbsUp, FaRegComment, FaHeart, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 function PostView() {
-  // URL에서 게시글 ID 가져오기.
-  const { id } = useParams();
-  // 페이지 이동 함수 가져오기.
-  const navigate = useNavigate();
-
-  // ID와 일치하는 게시글 찾기.
-  const post = posts.find((p) => p.id === parseInt(id));
-
-  // 1. 댓글 목록과 새 댓글 내용 상태 관리.
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
+  const [post, setPost] = useState(null);
+  const [postIndex, setPostIndex] = useState(-1);
 
-  // 게시글이 없을 경우 메시지 표시.
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  // useEffect 훅을 사용하여 id가 변경될 때마다 게시글 정보를 업데이트
+  useEffect(() => {
+    // URL의 id 파라미터를 기반으로 현재 게시글의 인덱스를 찾습니다.
+    const currentIndex = posts.findIndex((p) => p.id === parseInt(id));
+    setPostIndex(currentIndex);
+
+    // 게시글이 존재하면 post 상태를 업데이트합니다.
+    if (currentIndex !== -1) {
+      setPost(posts[currentIndex]);
+    } else {
+      setPost(null);
+    }
+    // id가 바뀔 때마다 useEffect를 다시 실행하도록 의존성 배열에 id를 추가합니다.
+  }, [id]);
+  
+  // 게시글이 존재하지 않으면 오류 메시지를 반환합니다.
   if (!post) {
-    return <div>게시글을 찾을 수 없어.</div>;
+    return <div className="outer">게시글을 찾을 수 없어.</div>;
   }
+  
+  // 이전/다음 게시글을 찾습니다.
+  const prevPost = postIndex > 0 ? posts[postIndex - 1] : null;
+  const nextPost = postIndex < posts.length - 1 ? posts[postIndex + 1] : null;
 
-  // '목록으로' 버튼 클릭 시 뒤로 가기.
   const handleGoBack = () => {
-    navigate(-1);
+    navigate('/');
   };
   
-  // 2. 댓글 입력창 내용 변경 시 상태 업데이트.
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
   };
   
-  // 3. '등록' 버튼 클릭 시 댓글 추가.
   const handleCommentSubmit = () => {
     if (newComment.trim() !== '') {
-      // 새 댓글 데이터 객체 생성.
       const commentId = comments.length > 0 ? comments[comments.length - 1].id + 1 : 1;
       const date = new Date().toLocaleDateString('ko-KR');
       const time = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
@@ -47,9 +57,7 @@ function PostView() {
         date: date,
         time: time
       };
-      // 기존 댓글에 새 댓글 추가 후 상태 업데이트.
       setComments([...comments, newCommentData]);
-      // 입력창 초기화.
       setNewComment('');
     }
   };
@@ -59,12 +67,16 @@ function PostView() {
       <h2>{post.title}</h2>
       <div className='post-meta'>
         <span>작성자: {post.author}</span>
+        <span className="separator">|</span>
         <span>작성일: {post.date}</span>
+        <span className="separator">|</span>
+        <span>조회수: {post.views}</span>
       </div>
       <hr />
       <div className='post-content'>
         <p>{post.content}</p>
       </div>
+
       <div className='post-reactions'>
         <button className='reaction-button like'>
           <FaThumbsUp className='reaction-icon' /> 추천
@@ -72,18 +84,42 @@ function PostView() {
         <button className='reaction-button heart'>
           <FaHeart className='reaction-icon' /> 좋아요
         </button>
-        {/* 댓글 수 표시. */}
         <button className='reaction-button comment'>
           <FaRegComment className='reaction-icon' /> 댓글 ({comments.length})
         </button>
       </div>
       <div className='post-actions'>
-        {/* '목록으로' 버튼에 클래스 추가. */}
         <button className="btn-edit">수정</button>
         <button className="btn-delete">삭제</button>
         <button onClick={handleGoBack} className="btn-list">목록으로</button>
       </div>
-      {/* 4. 댓글 섹션과 UI 추가. */}
+
+      {/* 이전 글/다음 글 네비게이션 */}
+      <div className='post-navigation'>
+        {prevPost ? (
+          <div className="nav-link-prev" onClick={() => navigate(`/post/${prevPost.id}`)}>
+            <div className="nav-icon"><FaChevronLeft /></div>
+            <div className="nav-text-group">
+                <span className="nav-title">이전글</span>
+                <span className="nav-text">{prevPost.title}</span>
+            </div>
+          </div>
+        ) : (
+          <div className="nav-link-disabled">이전 글이 없습니다.</div>
+        )}
+        {nextPost ? (
+          <div className="nav-link-next" onClick={() => navigate(`/post/${nextPost.id}`)}>
+            <div className="nav-text-group">
+                <span className="nav-title">다음글</span>
+                <span className="nav-text">{nextPost.title}</span>
+            </div>
+            <div className="nav-icon"><FaChevronRight /></div>
+          </div>
+        ) : (
+          <div className="nav-link-disabled">다음 글이 없습니다.</div>
+        )}
+      </div>
+
       <div className='comments-section'>
         <h3>댓글 ({comments.length})</h3>
         <div className='comment-input-area'>
@@ -94,7 +130,6 @@ function PostView() {
           ></textarea>
           <button onClick={handleCommentSubmit}>등록</button>
         </div>
-        {/* 5. 댓글 목록 표시. */}
         {comments.length > 0 ? (
           <div className='comment-list'>
             {comments.map((comment) => (

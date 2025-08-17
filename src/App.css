@@ -206,6 +206,16 @@ body {
   cursor: pointer;
 }
 
+/* 제목 링크 스타일 수정 */
+.list-table a {
+  text-decoration: none; /* 기본 상태에서 밑줄 제거 */
+  color: inherit; /* 부모 요소의 색상 상속 */
+}
+
+.list-table a:hover {
+  text-decoration: underline; /* 마우스를 올렸을 때 밑줄 추가 */
+}
+
 /* 테이블 셀 너비 설정. */
 .list-table th:nth-child(1), .list-table td:nth-child(1) { width: 10%; }
 .list-table th:nth-child(2), .list-table td:nth-child(2) { width: 40%; text-align: left; color: #000; }
@@ -229,11 +239,60 @@ body {
 }
 
 /* PostView 컴포넌트 내용 스타일. */
+.post-meta {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.post-meta .separator {
+  margin: 0 5px;
+  color: #ccc;
+}
 .post-content {
   padding: 2rem 0;
   border-bottom: 1px solid #e9ecef;
   line-height: 1.6;
   font-size: 1.1rem;
+}
+
+/* 첨부파일 섹션 스타일 */
+.attachments-section {
+  border-top: 1px solid #e9ecef;
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.attachments-section h3 {
+  font-size: 1.1rem;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 0;
+}
+
+.attachments-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+}
+
+.attachments-section li {
+  margin-bottom: 8px;
+}
+
+.attachments-section a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.attachments-section a:hover {
+  text-decoration: underline;
 }
 
 /* 반응 버튼 섹션 스타일. */
@@ -307,6 +366,75 @@ body {
 
 .post-actions button:hover {
   filter: brightness(1.2);
+}
+/* 이전 글/다음 글 네비게이션 스타일 */
+.post-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  border-top: 1px solid #e9ecef;
+  padding-top: 1.5rem;
+}
+
+.nav-link-prev,
+.nav-link-next {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.nav-link-prev:hover,
+.nav-link-next:hover {
+  background-color: #f0f0f0;
+}
+
+.nav-link-prev {
+  justify-content: flex-start;
+}
+
+.nav-link-next {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.nav-icon {
+    font-size: 1.2rem;
+    color: #00a400;
+}
+
+.nav-text-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-title {
+  font-weight: bold;
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.nav-text {
+  color: #333;
+  font-size: 1rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 250px;
+}
+
+.nav-link-disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  font-style: italic;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
 }
 
 /* 댓글 섹션 스타일. */
